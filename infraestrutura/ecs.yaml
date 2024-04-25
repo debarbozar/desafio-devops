@@ -1,0 +1,27 @@
+name: desafio-devops
+
+on:
+    push:
+    branches: [ '*' ]
+  pull_request:
+    branches: [ '*' ]
+
+jobs:
+
+  ECS:
+    run-on: ubuntu-latest
+    steps:
+    - name: Credenciais AWS
+      uses: aws-actions/cofigure-aws-credentials@v1
+      with:
+        #usar o IAM para criar credenciais de segurança e ter uma senha e chave de acesso | registrar action seccrets no github
+        aws-acess-key-id: ${{secrets.CHAVE_ACESSO}} 
+        aws-secret-acess-key: $ {{SECRETS.CHAVE_SECRETA}}
+        aws-region: us-east-2
+
+      -name: Task Definition
+        run: aws ecs describe-task-definition  --task-definiion desafio_devops --query tsdkDefinition > tsk-definition.json
+      
+
+## Continuar com a criação de serviço + deploy do ECS
+
